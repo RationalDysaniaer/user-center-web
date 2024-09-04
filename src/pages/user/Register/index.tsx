@@ -1,13 +1,7 @@
 import Footer from '@/components/Footer';
 import { register } from '@/services/ant-design-pro/api';
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { history } from 'umi';
@@ -20,8 +14,8 @@ const Register: React.FC = () => {
   //表单提交
   const handleSubmit = async (values: API.RegisterParams) => {
     //校验
-    const{ userPassword,checkPassword } = values;
-    if(userPassword !== checkPassword){
+    const { userPassword, checkPassword } = values;
+    if (userPassword !== checkPassword) {
       message.error('用户两次输入的密码不一致');
       return;
     }
@@ -37,17 +31,14 @@ const Register: React.FC = () => {
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         const { query } = history.location;
-        const { redirect } = query as {
-          redirect: string;
-        };
-        history.push(
-          pa
-        );
+        history.push({
+          pathname: '/user/login',
+          query,
+        });
         return;
-      }else{
-        throw new Error(`register error id = ${id}`)
+      } else {
+        throw new Error(`register error id = ${id}`);
       }
-  
     } catch (error) {
       const defaultLoginFailureMessage = '注册失败，请重试！';
       message.error(defaultLoginFailureMessage);
@@ -57,16 +48,18 @@ const Register: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          submitter={
-            {
-              searchConfig:{
-                submitText: '注册'
-              }
-            }
-          }
+          submitter={{
+            searchConfig: {
+              submitText: '注册',
+            },
+          }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title={PLANET_LINK}
-          subTitle={<a href={PLANET_LINK} target='_blank' rel='noreferrer'>最好的用户管理系统</a>}
+          subTitle={
+            <a href={PLANET_LINK} target="_blank" rel="noreferrer">
+              最好的用户管理系统
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
@@ -77,7 +70,6 @@ const Register: React.FC = () => {
           <Tabs activeKey={type} onChange={setType}>
             <Tabs.TabPane key="account" tab={'账号密码注册'} />
           </Tabs>
-
 
           {type === 'account' && (
             <>
@@ -110,8 +102,8 @@ const Register: React.FC = () => {
                   {
                     min: 8,
                     type: 'string',
-                    message: '密码长度不能小于8'
-                  }
+                    message: '密码长度不能小于8',
+                  },
                 ]}
               />
 
@@ -130,13 +122,27 @@ const Register: React.FC = () => {
                   {
                     min: 8,
                     type: 'string',
-                    message: '密码长度不能小于8'
-                  }
+                    message: '密码长度不能小于8',
+                  },
+                ]}
+              />
+
+              <ProFormText
+                name="planetCode"
+                fieldProps={{
+                  size: 'large',
+                  prefix: <UserOutlined className={styles.prefixIcon} />,
+                }}
+                placeholder="请输入星球编号"
+                rules={[
+                  {
+                    required: true,
+                    message: '星球编号是必填项！',
+                  },
                 ]}
               />
             </>
           )}
-
         </LoginForm>
       </div>
       <Footer />
