@@ -1,21 +1,8 @@
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCaptcha,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Alert, Button, Divider, message, Space, Tabs } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { Alert, Divider, message, Space, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { history, Link, useModel } from 'umi';
 import styles from './index.less';
@@ -65,8 +52,8 @@ const Login: React.FC = () => {
         history.push(redirect || '/');
         return;
       }
-  
-      setUserLoginState(user);
+
+      // setUserLoginState(user);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       message.error(defaultLoginFailureMessage);
@@ -79,7 +66,11 @@ const Login: React.FC = () => {
         <LoginForm
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title={PLANET_LINK}
-          subTitle={<a href={PLANET_LINK} target='_blank' rel='noreferrer'>最好的用户管理系统</a>}
+          subTitle={
+            <a href={PLANET_LINK} target="_blank" rel="noreferrer">
+              最好的用户管理系统
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
@@ -125,8 +116,8 @@ const Login: React.FC = () => {
                   {
                     min: 8,
                     type: 'string',
-                    message: '密码长度不能小于8'
-                  }
+                    message: '密码长度不能小于8',
+                  },
                 ]}
               />
             </>
@@ -139,31 +130,25 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            
-
-            <Space split={<Divider type='vertical'/>}>
+            <Space split={<Divider type="vertical" />}>
               <ProFormCheckbox noStyle name="autoLogin">
                 自动登录 &nbsp;
               </ProFormCheckbox>
 
-              <Link to='/user/register'>新用户注册</Link>
+              <Link to="/user/register">新用户注册</Link>
 
               <a
                 style={{
                   float: 'right',
                 }}
-                href='www.github.com'
-                target='_blank'
+                href="www.github.com"
+                target="_blank"
               >
                 忘记密码
               </a>
             </Space>
-
-
-
           </div>
         </LoginForm>
-        
       </div>
       <Footer />
     </div>
